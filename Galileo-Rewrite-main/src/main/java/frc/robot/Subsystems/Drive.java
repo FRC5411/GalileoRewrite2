@@ -14,6 +14,7 @@ public class Drive extends SubsystemBase {
   private WPI_TalonSRX liftMotorRight;
 
   public Drive() {
+    //Drive Motors
     leftBackMotor = configWPI_TalonSRX(leftFrontMotor, 14, true);
     leftFrontMotor = configWPI_TalonSRX(leftBackMotor, 15, true);
     rightBackMotor = configWPI_TalonSRX(rightBackMotor, 3, false);
@@ -35,11 +36,6 @@ public class Drive extends SubsystemBase {
   }
 
   public void cartesianDrive(double x, double y, double z) {
-    // x = deadzone(x, 0.15);
-    // y = deadzone(y, 0.15);
-    // z = deadzone(z, 0.15);
-
-
     double wheelSpeeds[] = normalize(calculateMecanumSpeeds(x, y, z));
 
     wheelSpeeds = deadband(wheelSpeeds, 0.15);
@@ -59,8 +55,8 @@ public class Drive extends SubsystemBase {
           right /= max;
         }
 
-        liftMotorLeft.set(transalte - rotate);
-        liftMotorRight.set(transalte + rotate);
+        liftMotorLeft.set(left);
+        liftMotorRight.set(right);
     }
   }
 
@@ -106,6 +102,7 @@ public class Drive extends SubsystemBase {
     double LB = wheelSpeeds[1];
     double RF = wheelSpeeds[2];
     double RB = wheelSpeeds[3];
+
     double max = Math.max(Math.max(Math.abs(LF), Math.abs(LB)), 
                           Math.max(Math.abs(RF), Math.abs(RB)));
 

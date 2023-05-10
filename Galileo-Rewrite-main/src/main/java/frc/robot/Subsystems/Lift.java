@@ -18,7 +18,7 @@ public class Lift extends SubsystemBase {
   public Lift() {
     m_FrontLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 0, 7);
     m_BackLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 1, 6);
-    m_SideLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 2, 5);
+    m_SideLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 5, 2);
 
     frontLift = false;
 

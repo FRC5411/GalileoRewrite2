@@ -47,30 +47,30 @@ public class RobotContainer {
 
   private void configureBindings() {
     //Score commands
-    //Intake
-    click(mController.a(), mIntake.spinInCommand(), mIntake.stopCommand());
-
     //Score low
-    click(mController.b(), mIntake.lowScoreCommand(), mIntake.stopCommand());
+    click(mController.rightTrigger(), mIntake.lowScoreCommand(), mIntake.stopCommand());
 
     //Score mid
-    click(mController.y(), mIntake.midScoreCommand(), mIntake.stopCommand());
+    click(mController.leftTrigger(), mIntake.midScoreCommand(), mIntake.stopCommand());
 
     //Score plate
-    click(mController.x(), mLift.toggleSideCommand(), mLift.sideStopCommand());
+    click(mController.rightBumper(), mLift.pushOutCommand(), mLift.sideStopCommand());
+
+    //Bring in
+    click(mController.leftBumper(), mLift.pushInCommand(), mLift.sideStopCommand());
 
     //Lift Commands
     //Lift Both
-    click(HIGH, mLift.liftUpCommand(), mLift.stopCommand());
+    click(HIGH, mLift.liftUpCommand());
 
     //Bring down both
-    click(LOW, mLift.bringDownCommand(), mLift.stopCommand());
+    click(LOW, mLift.bringDownCommand());
 
     //Toggle front
-    click(IN, mLift.liftFrontUpCommand(), mLift.stopCommand());
+    click(IN, mLift.toggleFrontCommand());
 
     //Toggle back
-    click(OUT, mLift.liftBackUpCommand(), mLift.stopCommand());
+    click(OUT, mLift.toggleFrontCommand());
   }
 
   public void click(Trigger button, Command command, Command command2) {
