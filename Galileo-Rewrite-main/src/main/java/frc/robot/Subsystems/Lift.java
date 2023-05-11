@@ -13,6 +13,7 @@ public class Lift extends SubsystemBase {
   private DoubleSolenoid m_BackLift;
   private DoubleSolenoid m_SideLift;
   private boolean frontLift;
+  private boolean backLift;
   private Compressor m_compressor;
 
   public Lift() {
@@ -21,6 +22,7 @@ public class Lift extends SubsystemBase {
     m_SideLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 5, 2);
 
     frontLift = false;
+    backLift = false;
 
     m_compressor = new Compressor(5, PneumaticsModuleType.CTREPCM);
   }
@@ -39,6 +41,7 @@ public class Lift extends SubsystemBase {
   }
 
   public void liftBackUp() {
+    backLift = false;
     m_BackLift.set(kForward);
   }
 
@@ -48,6 +51,7 @@ public class Lift extends SubsystemBase {
   }
 
   public void bringBackDown() {
+    backLift = true;
     m_BackLift.set(kReverse);
   }
 
@@ -66,6 +70,22 @@ public class Lift extends SubsystemBase {
   public void stop() {
     m_FrontLift.set(kOff);
     m_BackLift.set(kOff);
+  }
+
+  public void toggleFront() {
+    if (frontLift) {
+      liftFrontUp();
+    } else {
+      bringFrontDown();
+    }
+  }
+
+  public void toggleBack() {
+    if (backLift) {
+      liftBackUp();
+    } else {
+      bringBackDown();
+    }
   }
 
   public ParallelCommandGroup liftUpCommand() {
@@ -103,11 +123,11 @@ public class Lift extends SubsystemBase {
   }
 
   public InstantCommand toggleFrontCommand() {
-    return new InstantCommand(()-> m_FrontLift.toggle(), this);
+    return new InstantCommand(()-> toggleFront(), this);
   }
 
   public InstantCommand toggleBackCommand() {
-    return new InstantCommand(()-> m_BackLift.toggle(), this);
+    return new InstantCommand(()-> toggleBack(), this);
   }
 
   public InstantCommand stopCommand() {
@@ -132,7 +152,7 @@ public class Lift extends SubsystemBase {
   }
 
   public boolean getLiftState() {
-    return get(m_FrontLift.get()) == 1;
+    return frontLift;
   }
 
   @Override

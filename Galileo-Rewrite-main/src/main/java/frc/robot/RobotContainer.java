@@ -61,16 +61,16 @@ public class RobotContainer {
 
     //Lift Commands
     //Lift Both
-    click(HIGH, mLift.liftUpCommand());
+    click(HIGH, mLift.liftUpCommand(), mLift.stopCommand());
 
     //Bring down both
-    click(LOW, mLift.bringDownCommand());
+    click(LOW, mLift.bringDownCommand(), mLift.stopCommand());
 
     //Toggle front
-    click(IN, mLift.toggleFrontCommand());
+    click(IN, mLift.toggleFrontCommand(), mLift.stopCommand());
 
     //Toggle back
-    click(OUT, mLift.toggleFrontCommand());
+    click(OUT, mLift.toggleBackCommand(), mLift.stopCommand());
   }
 
   public void click(Trigger button, Command command, Command command2) {
