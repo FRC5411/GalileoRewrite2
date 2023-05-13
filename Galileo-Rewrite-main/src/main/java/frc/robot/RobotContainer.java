@@ -59,6 +59,12 @@ public class RobotContainer {
     //Bring in
     click(mController.leftBumper(), mLift.pushInCommand(), mLift.sideStopCommand());
 
+    //Toggle intake
+    click(mController.a(), mLift.toggleIntakeCommand(), mLift.stopCommand());
+
+    //Wheel intake(extra)
+    click(mController.b(), mIntake.spinInCommand(), mIntake.stopCommand());
+
     //Lift Commands
     //Lift Both
     click(HIGH, mLift.liftUpCommand(), mLift.stopCommand());

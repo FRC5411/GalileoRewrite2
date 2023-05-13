@@ -12,17 +12,21 @@ public class Lift extends SubsystemBase {
   private DoubleSolenoid m_FrontLift;
   private DoubleSolenoid m_BackLift;
   private DoubleSolenoid m_SideLift;
+  private DoubleSolenoid m_Intake;
   private boolean frontLift;
   private boolean backLift;
+  private boolean intake;
   private Compressor m_compressor;
 
   public Lift() {
     m_FrontLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 0, 7);
     m_BackLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 1, 6);
     m_SideLift = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 5, 2);
+    m_Intake = new DoubleSolenoid(5, PneumaticsModuleType.CTREPCM, 3, 4);
 
     frontLift = false;
     backLift = false;
+    intake = false;
 
     m_compressor = new Compressor(5, PneumaticsModuleType.CTREPCM);
   }
@@ -63,6 +67,16 @@ public class Lift extends SubsystemBase {
     m_SideLift.set(kReverse);
   }
 
+  public void intakeOut() {
+    intake = true;
+    m_Intake.set(kForward);
+  }
+
+  public void intakeIn() {
+    intake = false;
+    m_Intake.set(kReverse);
+  }
+
   public void sideStop() {
     m_SideLift.set(kOff);
   }
@@ -85,6 +99,14 @@ public class Lift extends SubsystemBase {
       liftBackUp();
     } else {
       bringBackDown();
+    }
+  }
+
+  public void toggleIntake() {
+    if (intake) {
+      intakeIn();
+    } else {
+      intakeOut();
     }
   }
 
@@ -128,6 +150,10 @@ public class Lift extends SubsystemBase {
 
   public InstantCommand toggleBackCommand() {
     return new InstantCommand(()-> toggleBack(), this);
+  }
+
+  public InstantCommand toggleIntakeCommand() {
+    return new InstantCommand(()-> toggleIntake(), this);
   }
 
   public InstantCommand stopCommand() {
